@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Assist {
@@ -11,37 +12,35 @@ class Assist {
   });
 
   Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'id': id});
-    result.addAll({'name': name});
-    result.addAll({'description': description});
-
-    return result;
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'description': description,
+    };
   }
 
   factory Assist.fromMap(Map<String, dynamic> map) {
     return Assist(
-      id: map['id']?.toInt() ?? 0,
-      name: map['name'] ?? '',
-      description: map['description'] ?? '',
+      id: map['id'] as int,
+      name: map['name'] as String,
+      description: map['description'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Assist.fromJson(String source) => Assist.fromMap(json.decode(source));
+  factory Assist.fromJson(String source) =>
+      Assist.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() =>
       'Assist(id: $id, name: $name, description: $description)';
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant Assist other) {
     if (identical(this, other)) return true;
 
-    return other is Assist &&
-        other.id == id &&
+    return other.id == id &&
         other.name == name &&
         other.description == description;
   }

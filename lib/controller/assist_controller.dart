@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 class AssistController extends GetxController with StateMixin<List<Assist>> {
   late AssistService _service;
-
   @override
   void onInit() {
     super.onInit();
