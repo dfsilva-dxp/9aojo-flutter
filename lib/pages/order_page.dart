@@ -40,36 +40,49 @@ class OrderPage extends GetView<OrderController> {
               decoration:
                   const InputDecoration(labelText: "Código do prestador"),
               textAlign: TextAlign.center,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return "Informe o código do prestador";
+                }
+
+                return null;
+              },
             ),
-            Row(children: [
-              const Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.only(top: 25, bottom: 25),
-                      child: Text(
-                        'Selecione os serviços a serem prestados',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ))),
-              Ink(
-                  decoration: const ShapeDecoration(
-                      shape: CircleBorder(), color: Colors.deepPurpleAccent),
-                  width: 40,
-                  height: 40,
-                  child: IconButton(
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      onPressed: () => controller.editAssists()))
-            ]),
+            Container(
+              margin: const EdgeInsets.only(top: 40, bottom: 20),
+              child: Row(children: [
+                const Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.only(top: 25, bottom: 25),
+                        child: Text(
+                          'Selecione os serviços a serem prestados',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 14.0, fontWeight: FontWeight.bold),
+                        ))),
+                Ink(
+                    decoration: const ShapeDecoration(
+                        shape: CircleBorder(), color: Colors.deepPurpleAccent),
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => controller.editAssists()))
+              ]),
+            ),
             Obx(
               () => renderAssists(controller.selectedAssists),
             ),
             Row(children: [
               Expanded(
                   child: ElevatedButton(
-                      onPressed: () => controller.finishStartOrder(),
+                      onPressed: () => {
+                            if (controller.formKey.currentState!.validate())
+                              {controller.finishStartOrder()}
+                          },
                       child: Obx(
                         () {
                           if (controller.screenState.value ==
