@@ -10,8 +10,12 @@ class HomePage extends GetView<AssistController> {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: assist.length,
-        itemBuilder: ((context, index) =>
-            ListTile(title: Text(assist[index].name))));
+        itemBuilder: ((context, index) => ListTile(
+              title: Text(assist[index].name),
+              selectedColor: Colors.purple,
+              selected: controller.isSelected(index),
+              onTap: () => controller.selectAssist(index),
+            )));
   }
 
   @override
@@ -19,34 +23,36 @@ class HomePage extends GetView<AssistController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de serviços'),
+        toolbarHeight: 120,
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),
-        child: Column(
+        child: SingleChildScrollView(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Row(
               children: const [
                 Expanded(
-                    child: Text('Os serviços disponíveis são:',
-                        textAlign: TextAlign.center))
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: TextButton(
-                  onPressed: controller.getAssistList,
-                  child: const Text('Recaregar'),
-                ))
+                    child: Padding(
+                        padding: EdgeInsets.only(top: 40, bottom: 40, left: 20),
+                        child: Text('Os serviços disponíveis são:',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)))),
               ],
             ),
             controller.obx(
               (state) => renderAssist(state ?? []),
               onError: (error) => Text(error.toString()),
+              onEmpty: const Text("Nenhuma assistência disponível"),
             )
           ],
-        ),
+        )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => controller.finishSelectAssist(),
+        child: const Icon(Icons.done),
       ),
     );
   }

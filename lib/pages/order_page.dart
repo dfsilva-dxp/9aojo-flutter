@@ -20,6 +20,7 @@ class OrderPage extends GetView<OrderController> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Pesquisar ordem de serviço"),
+          toolbarHeight: 120,
         ),
         body: Container(
             constraints: const BoxConstraints.expand(),
@@ -32,12 +33,15 @@ class OrderPage extends GetView<OrderController> {
                   children: <Widget>[
                     Row(children: const [
                       Expanded(
-                          child: Text(
-                        'Preencha o fomulário de ordem de serviço',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
-                      ))
+                          child: Padding(
+                              padding: EdgeInsets.all(40),
+                              child: Text(
+                                'Preencha o fomulário de ordem de serviço',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              )))
                     ]),
                     TextFormField(
                       controller: controller.operatorIdController,
@@ -60,7 +64,8 @@ class OrderPage extends GetView<OrderController> {
                               ))),
                       Ink(
                           decoration: const ShapeDecoration(
-                              shape: CircleBorder(), color: Colors.brown),
+                              shape: CircleBorder(),
+                              color: Colors.deepPurpleAccent),
                           // ignore: sort_child_properties_last
                           child: IconButton(
                               color: Colors.brown,
